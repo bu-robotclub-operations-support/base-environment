@@ -11,7 +11,7 @@ expected_ros="jazzy"
 if [[ "$ROS_DISTRO" == "$expected_ros" ]]; then 
     echo -e "${GREEN}[PASS]${NC} ROS Jazzy Jalisco confirmed."
 else
-    echo -e "${RED}[FAIL] Expected ROS_DISTRO=${expected_ros}, got {$ROS_DISTRO}.${NC}"
+    echo -e "${RED}[FAIL] Expected ROS_DISTRO=${expected_ros}, got ${ROS_DISTRO}.${NC}"
     exit 1
 fi
 
@@ -70,3 +70,13 @@ for dep in "${REQUIRED_DEPENDENCIES[@]}"; do
     confirm_dependency_present $dep
 done
 
+# Verify uv version
+expected_uv="0.12.19"
+actual_uv="$(uv self version --short)"
+
+if [[ "$actual_uv" == "$expected_uv" ]]; then
+    echo -e "${GREEN}[PASS] uv ${expected_uv} confirmed.${NC}"
+else
+    echo -e "${RED}[FAIL] expected uv ${expected_uv}, got ${actual_uv}${NC}."
+    exit 1
+fi
